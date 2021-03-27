@@ -132,3 +132,4 @@ dmypy.json
 
 #VERY LARGE FILE
 connect_to_db/new_york_tree_census_2015.csv
+dramane/clean_new_york_tree_census_2015_data.csv
