@@ -1,4 +1,4 @@
-CREATE TABLE new_york_tree_census_data (
+CREATE TABLE new_york_tree_census_data_final (
 id Serial PRIMARY KEY,
 tree_id INT,
 stump_diam INT,
@@ -11,5 +11,6 @@ zipcode INT,
 boroname VARCHAR(255),
 nta_name VARCHAR(255),
 latitude FLOAT,
-longitude FLOAT
+longitude FLOAT,
+spc_latin_for_join VARCHAR(255)
 );
