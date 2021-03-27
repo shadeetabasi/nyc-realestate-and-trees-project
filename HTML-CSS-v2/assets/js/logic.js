@@ -17,7 +17,7 @@ var myMap = L.map("map", {
 
   // Store our API endpoint
 
-var queryUrl = "";
+var queryUrl = "https://tree-map.nycgovparks.org/";
 
 //  GET color radius call to the query URL
 d3.json(queryUrl, function(data) {
