@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .DS_Store
+
+#VERY LARGE FILE
+connect_to_db/new_york_tree_census_2015.csv
