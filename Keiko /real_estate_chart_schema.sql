@@ -2,6 +2,7 @@
 CREATE TABLE real_estate_data (
 id Serial PRIMARY KEY,
 full_address VARCHAR,
+building_class_category VARCHAR,
 sale_price FLOAT,
 neighborhood VARCHAR,
 tax_class_at_present VARCHAR,
