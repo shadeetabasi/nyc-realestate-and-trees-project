@@ -7,6 +7,9 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
 	</head>
 	<body class="is-preload">
 
@@ -40,7 +43,7 @@
 			<section id="main" class="wrapper">
 				<div class="inner">
 					<div class="content">
-						<div id="map"></div>
+						<div id="leafletmap"></div>
 					</div>
 				</div>
 			</section>
@@ -74,8 +77,20 @@
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/browser.min.js"></script>
         <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		
+		<!-- D3 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+
+		<!-- Leaflet JavaScript -->
+		<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+		integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+		crossorigin=""></script>
+
+		<script src="assets/js/config.js"></script>
+		<script src="assets/js/logic2.js"></script>
+	  
 
 </body>
 </html>
