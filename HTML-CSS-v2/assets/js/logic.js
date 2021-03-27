@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Create the tile layer that will be the background of our map
 var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -106,64 +107,109 @@ d3.json(" https://tree-map.nycgovparks.org/ ", function(infoRes) {
       LOW: 0,
       NORMAL: 0,
       OUT_OF_ORDER: 0
+=======
+// Creating our initial map object
+// We set the longitude, latitude, and the starting zoom level for sf
+// This gets inserted into the div with an id of 'map' in index.html
+var myMap = L.map("map", {
+    center: [40.7128, 74.0060],
+    zoom: 5
+  });
+  
+  // Adding a tile layer (the background map image) to our map
+  // We use the addTo method to add objects to our map
+  L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "mapbox.streets",
+    accessToken: "pk.eyJ1IjoiZHJhbWFuZTg3IiwiYSI6ImNrbTVqcnJidTBmMzkydXBtN3RqNjdudTkifQ.-___3uvfKMsjSzjBFWeI8g"
+  }).addTo(myMap);
+
+  // Store our API endpoint
+
+var queryUrl = "https://tree-map.nycgovparks.org/";
+
+//  GET color radius call to the query URL
+d3.json(queryUrl, function(data) {
+  function styleInfo(feature) {
+    return {
+      opacity: 1,
+      fillOpacity: 1,
+      fillColor: getColor(feature.properties.mag),
+      color: "#000000",
+      radius: getRadius(feature.properties.mag),
+      stroke: true,
+      weight: 0.5
+>>>>>>> 5e1544e6872b6dbaa2833f82a5bc233db3fd3907
     };
-
-    // Initialize a stationStatusCode, which will be used as a key to access the appropriate layers, icons, and station count for layer group
-    var stationStatusCode;
-
-    // Loop through the stations (they're the same size and have partially matching data)
-    for (var i = 0; i < stationInfo.length; i++) {
-
-      // Create a new station object with properties of both station objects
-      var station = Object.assign({}, stationInfo[i], stationStatus[i]);
-      // If a station is listed but not installed, it's coming soon
-      if (!station.is_installed) {
-        stationStatusCode = "COMING_SOON";
-      }
-      // If a station has no bikes available, it's empty
-      else if (!station.num_bikes_available) {
-        stationStatusCode = "EMPTY";
-      }
-      // If a station is installed but isn't renting, it's out of order
-      else if (station.is_installed && !station.is_renting) {
-        stationStatusCode = "OUT_OF_ORDER";
-      }
-      // If a station has less than 5 bikes, it's status is low
-      else if (station.num_bikes_available < 5) {
-        stationStatusCode = "LOW";
-      }
-      // Otherwise the station is normal
-      else {
-        stationStatusCode = "NORMAL";
-      }
-
-      // Update the station count
-      stationCount[stationStatusCode]++;
-      // Create a new marker with the appropriate icon and coordinates
-      var newMarker = L.marker([station.lat, station.lon], {
-        icon: icons[stationStatusCode]
-      });
-
-      // Add the new marker to the appropriate layer
-      newMarker.addTo(layers[stationStatusCode]);
-
-      // Bind a popup to the marker that will  display on click. This will be rendered as HTML
-      newMarker.bindPopup(station.name + "<br> Capacity: " + station.capacity + "<br>" + station.num_bikes_available + " Bikes Available");
+  }
+  // set different color from magnitude
+    function getColor(magnitude) {
+    switch (true) {
+    case magnitude > 5:
+      return "#ea2c2c";
+    case magnitude > 4:
+      return "#ea822c";
+    case magnitude > 3:
+      return "#ee9c00";
+    case magnitude > 2:
+      return "#eecc00";
+    case magnitude > 1:
+      return "#d4ee00";
+    default:
+      return "#98ee00";
+    }
+  }
+  // set radiuss from magnitude
+    function getRadius(magnitude) {
+    if (magnitude === 0) {
+      return 1;
     }
 
-    // Call the updateLegend function, which will... update the legend!
-    updateLegend(updatedAt, stationCount);
+    return magnitude * 4;
+  }
+    // GeoJSON layer
+    L.geoJson(data, {
+      // Maken cricles
+      pointToLayer: function(feature, latlng) {
+        return L.circleMarker(latlng);
+      },
+      // cirecle style
+      style: styleInfo,
+      // popup for each marker
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
+      }
+    }).addTo(myMap);
+  
+    // an object legend
+    var legend = L.control({
+      position: "bottomright"
+    });
+  
+    // details for the legend
+    legend.onAdd = function() {
+      var div = L.DomUtil.create("div", "info legend");
+  
+      var grades = [0, 1, 2, 3, 4, 5];
+      var colors = [
+        "#98ee00",
+        "#d4ee00",
+        "#eecc00",
+        "#ee9c00",
+        "#ea822c",
+        "#ea2c2c"
+      ];
+  
+      // Looping through
+      for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+          "<i style='background: " + colors[i] + "'></i> " +
+          grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+      }
+      return div;
+    };
+  
+    // Finally, we our legend to the map.
+    legend.addTo(myMap);
   });
-});
-
-// Update the legend's innerHTML with the last updated time and station count
-function updateLegend(time, stationCount) {
-  document.querySelector(".legend").innerHTML = [
-    "<p>Updated: " + moment.unix(time).format("h:mm:ss A") + "</p>",
-    "<p class='out-of-order'>Out of Order Stations: " + stationCount.OUT_OF_ORDER + "</p>",
-    "<p class='coming-soon'>Stations Coming Soon: " + stationCount.COMING_SOON + "</p>",
-    "<p class='empty'>Empty Stations: " + stationCount.EMPTY + "</p>",
-    "<p class='low'>Low Stations: " + stationCount.LOW + "</p>",
-    "<p class='healthy'>Healthy Stations: " + stationCount.NORMAL + "</p>"
-  ].join("");
-}
