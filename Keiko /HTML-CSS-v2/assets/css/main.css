@@ -2825,3 +2825,6 @@ body.is-menu-visible #menu {
     justify-content: center;
   }
 
+  
+  #mapid { height: 180px; }
+
