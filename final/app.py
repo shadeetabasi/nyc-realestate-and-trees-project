@@ -3,6 +3,7 @@
 
 # Set up Dependencies 
 import numpy as np
+import pandas as pd
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -72,7 +73,34 @@ def team():
 
 @app.route("/treedashboard")
 def treedashboard():
-    return render_template("treedashboard.html")
+    # 
+    all_data = []
+    query = """SELECT latitude, longitude, spc_common, boroname, health 
+                FROM public.new_york_tree_census_data_final"""
+    # Open a connection to SQL
+    connection = engine.connect()
+    # Execute query
+    result = engine.execute(query)
+    # Append each result to our list
+    for row in result:
+        all_data.append(row)
+    # Close the connection
+    connection.close()
+
+    # Convert to a DF, group by boro and species
+    df = pd.DataFrame(all_data, columns = ["latitude", "longitude", "spc_common", "boroname", "health"])
+    grouped = df.groupby(["boroname", "spc_common"]).agg({"health":"count"})
+
+    # Format data for D3
+    bar_data = {}
+    for boro in df.boroname.unique():
+        subdf = grouped.loc[boro]
+        top15 = subdf.sort_values(by='health', ascending=False).iloc[:15]
+        y = list(top15.index)
+        x = list(top15.health)
+        bar_data[boro] = {"x": x, "y": y}
+    # Return template and data
+    return render_template("treedashboard.html", bar_data= bar_data, boros = list(bar_data.keys()))
 
 @app.route("/treedata")
 def treedata():
