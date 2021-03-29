@@ -19,7 +19,7 @@
 			<header id="header">
 				<a class="logo" href="./index">NYC Real Estate & Trees</a>
 				<nav>
-					<!-- <a href="#menu">Menu</a> -->
+					<a href="#menu">Menu</a>
 				</nav>
 			</header>
 
@@ -31,8 +31,6 @@
 					<li><a href="leafletmap">Mapping NYC</a></li>
 					<li><a href="treedashboard">NYC Trees Dashboard</a></li>
 					<li><a href="realestatedashboard">NYC Real Estate Dashboard</a></li>
-					<li><a href="treedata">NYC Tree Census Data</a></li>
-					<li><a href="realestatedata">NYC Real Estate Data</a></li>
 				</ul>
 			</nav>
 
@@ -81,16 +79,17 @@
 		crossorigin=""></script>
 		<!-- D3 -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
-		<script type="text/javascript" href="{{ url_for('static', filename='js/config.js') }}"></script>
-		<script type="text/javascript" href="{{ url_for('static', filename='js/logic2.js') }}"></script>
-  
+		<script src="/static/js/config.min.js"></script>
+        <script src="/static/js/logic2.min.js"></script>
+
 		<!-- Custom -->
-        <script type="text/javascript" href="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-		<script type="text/javascript" href="{{ url_for('static', filename='js/browser.min.js') }}"></script>
-		<script type="text/javascript" href="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
-		<script type="text/javascript" href="{{ url_for('static', filename='js/util.min.js') }}"></script>
-		<!-- <script type="text/javascript" href="{{ url_for('static', filename='js/main.min.js') }}"></script> -->
+        <script src="/static/js/jquery.min.js"></script>
+		<script src="/static/js/browser.min.js"></script>
+		<script src="/static/js/breakpoints.min.js"></script>
+		<script src="/static/js/util.js"></script>
+		<script src="/static/js/main.js"></script>
 		<script>
+
 			// var myMap = L.map("leafletmap").setView([ 40.1797, -74.8113], 5);
 			var myMap = L.map("leafletmap", {
 				center: [40.782864, -73.965355],
@@ -105,6 +104,7 @@
 				id: "mapbox/streets-v11",
 				accessToken:API_KEY
 			}).addTo(myMap);
+
 		</script>
 		
 		
