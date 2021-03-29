@@ -20,15 +20,6 @@ app.static_folder = 'static'
 connection_string = "postgres:postgres@localhost:5432/group_project_2"
 engine = create_engine(f'postgresql://{connection_string}')
 
-# reflect an existing database into a new model - still needed?
-Base = automap_base() 
-
-# reflect the tables - IS THIS STILL NEEDED?
-Base.prepare(engine, reflect=True) 
-
-# Save references to each table - IS THIS STILL NEEDED?
-# measurement = Base.classes.measurement
-# station = Base.classes.station
 
 #################################################
 # Flask Routes
