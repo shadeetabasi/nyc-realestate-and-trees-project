@@ -112,7 +112,7 @@ d3.json(" https://tree-map.nycgovparks.org/ ", function(infoRes) {
 // We set the longitude, latitude, and the starting zoom level for sf
 // This gets inserted into the div with an id of 'map' in index.html
 var myMap = L.map("map", {
-    center: [40.7128, 74.0060],
+    center: [40.7128, -74.0060],
     zoom: 5
   });
   
