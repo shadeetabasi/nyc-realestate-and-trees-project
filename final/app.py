@@ -110,27 +110,30 @@ def treedashboard():
     # Close the connection
     connection.close()
 
-    # Convert to a DF, group by boro and species
+    # FOR BAR CHART: Convert to a DF, group by boro and species
     df = pd.DataFrame(all_data, columns = ["latitude", "longitude", "spc_common", "boroname", "health"])
     grouped = df.groupby(["boroname", "spc_common"]).agg({"health":"count"})
+    # FOR PIE CHART: Convert to a DF, group by boro and species
+    health_grouped = df.groupby(["boroname", "health"]).agg({"spc_common":"count"})
 
+    # Format data for D
     # Format data for D3
     bar_data = {}
+    pie_data = {}
+
     for boro in df.boroname.unique():
         subdf = grouped.loc[boro]
         top15 = subdf.sort_values(by='health', ascending=False).iloc[:15]
         y = list(top15.index)
         x = list(top15.health)
         bar_data[boro] = {"x": x, "y": y}
+
+        subdf2 = health_grouped.loc[boro]
+        values = list(subdf2.spc_common)
+        labels = list(subdf2.index)
+        pie_data[boro] = {"values": values, "labels": labels}
     # Return template and data
-    return render_template("treedashboard.html", bar_data= bar_data, boros = list(bar_data.keys()))
-
-
-@app.route("/scrape")
-def scrape():
-
-    # Redirect back to home page
-    return redirect("/")
+    return render_template("treedashboard.html", bar_data= bar_data, pie_data = pie_data, boros = list(bar_data.keys()))
     
 if __name__ == "__main__":
     app.run(debug=True)

@@ -40,14 +40,33 @@
 				<div class="inner">
 					<div class="content">
 						<header>
-							<h2>Feugiat consequat</h2>
+							<h2>Observations</h2>
 						</header>
-						<p>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Magna et cursus lorem faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod tempus. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac sed amet praesent. Nunc lacinia ante nunc ac gravida lorem ipsum dolor sit amet dolor feugiat consequat. </p>
-						<hr />
-						<h3>Magna odio tempus commodo</h3>
-						<p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer lobortis commodo ornare aliquet accumsan erat tempus amet porttitor. Ante commodo blandit adipiscing integer semper orci eget. Faucibus commodo adipiscing mi eu nullam accumsan morbi arcu ornare odio mi adipiscing nascetur lacus ac interdum morbi accumsan vis mi accumsan ac praesent.</p>
+						<h3>Bronx</h3>
+						<p>In the NYC borough of the Bronx, the most common trees are collery pear trees with over twenty thousand trees. The next largest would be the london plant trees coming in at a little under twenty thousand and red maple coming in third with an estimation between five and ten thousand.</p>
+						<br>
+						<h3>Brooklyn</h3>
+						<p>In the NYC borough of Brooklyn, we can see that the most common trees are london planetrees. The estimated number of ion trees in Brooklyn are about thirty-five thousand. The next largest type would be honest locust trees, with the total amount being between and fifteen and twenty thousand with pine oak trees coming in third place with an estimated amount between ten and fifteen thousand.</p>
+						<br>
+						<h3>Manhattan</h3>
+						<p>In the NYC borough of Manhattan, the most common tree is the honeylocust with over twelve thousand examples. The second most common amount of trees would be callery pearwith a little over seven thousand examples and the gingko being third with a little under six thousand.</p>
+						<br>
+						<h3>Queens</h3>
+						<p>In the NYC borough of Queens, the most common tree would be the london planetree with over thirty thousand examples. The next most common tree would be pine oak with twenty to twenty-five thousand examples. The honey locust would come in third a little more than twenty thousand examples.</p>
+						<br>
+						<h3>Staten Island</h3>
+						<p>In the NYC borough of Staten Island, the most common tree is the collery pear tree with over twenty thousand examples. The next most common tree after that would be London plant tree with a little under ten thousand examples. The red maple comes in third with an estimated amount being between five thousand and ten thousand.</p>
+						<br>
+						<hr>
+						<header>
+							<h2>Conclusion</h2>
+						</header>
+						<p>The land comprising of New York City holds an estimated 5.2 million trees. Although Brooklyn is the largest borough in regard to population, Queens is the borough with the most amount of trees. Queens is also the largest borough (in regard to total area). However, the Brooklyn neighborhoof of Cobble has the most trees per square mile at 5783. The Queens neighborhood ofWillets Point has the least amount of trees per square mile at 231. The most common tree in NewYork City as a whole would be the London planetree which appears in the top three most common trees for every borough except Manhattan. The London planetree also accounts for 15.3% of trees in New York City.</p>
+						
 						
 						<div id="bar"></div>
+
+						<div id="pie"></div>
 
 							<select id="selDataset" onchange="optionChanged(this.value)">
 								{% for boro in boros %}
@@ -85,9 +104,6 @@
                         </ul>
                     </section>
                 </div>
-                <div class="copyright">
-                    &copy; Untitled. Photos <a href="https://unsplash.co">Unsplash</a>, Video <a href="https://coverr.co">Coverr</a>.
-                </div>
             </div>
         </footer>
 
@@ -103,6 +119,7 @@
 	<script>
 		// SAVE PATH
 		var raw_data = JSON.parse('{{ bar_data | tojson | safe}}');
+		var pie_data = JSON.parse('{{ pie_data | tojson | safe}}');
 
 		// Set bar chart data
 		const barChartData = {
@@ -115,6 +132,13 @@
 				order: 'ascending'
 			}]
 		};
+
+		const pieChartData = {
+			values: [],
+			labels: [],
+			type: "pie",
+		};
+
 		const layout = {
 			title: {
 				text:'',
@@ -134,9 +158,17 @@
 			}
 		};
 
+		const pielayout = {
+			height: 400,
+        	width: 500
+		};
+
 		Plotly.newPlot("bar", [barChartData], layout).then(
-			updatePlotly()
+			Plotly.newPlot("pie", [pieChartData], layout).then(
+				updatePlotly()
+			)
 		);
+
 
 		// This function is called when a dropdown menu item is selected
 		function updatePlotly() {
@@ -147,7 +179,11 @@
 
 			Plotly.restyle("bar", "y", [raw_data[boro]["y"]]);
 			Plotly.restyle("bar", "x", [raw_data[boro]["x"]]);
-			Plotly.relayout("bar", {"title": "Most common trees in " + boro  +", NY"})
+			Plotly.relayout("bar", {"title": "Most Common Tree Species in " + boro  +", NY"})
+
+			Plotly.restyle("pie", "values", [pie_data[boro]["values"]]);
+			Plotly.restyle("pie", "labels", [pie_data[boro]["labels"]]);
+			Plotly.relayout("pie", {"title": "Health/Condition of Trees in " + boro  +", NY"})
 
 		}
 
