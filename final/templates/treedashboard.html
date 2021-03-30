@@ -46,7 +46,7 @@
 						<hr />
 						<h3>Magna odio tempus commodo</h3>
 						<p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer lobortis commodo ornare aliquet accumsan erat tempus amet porttitor. Ante commodo blandit adipiscing integer semper orci eget. Faucibus commodo adipiscing mi eu nullam accumsan morbi arcu ornare odio mi adipiscing nascetur lacus ac interdum morbi accumsan vis mi accumsan ac praesent.</p>
-						<h5>Test Subject ID No.:</h5>
+						
 						<div id="bar"></div>
 
 							<select id="selDataset" onchange="optionChanged(this.value)">
@@ -125,8 +125,15 @@
 				},
 				xref: 'paper',
 				x: 0.05,
+				margin: {
+					l: 200,
+					r: 50,
+					b: 1,
+					t: 1,
+					pad: 0
+				}
 			}
-		}
+		};
 
 		Plotly.newPlot("bar", [barChartData], layout).then(
 			updatePlotly()

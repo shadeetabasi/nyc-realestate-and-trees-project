@@ -57,19 +57,40 @@ def leafletmap():
     map_data = sample(map_data, 100)
 
     # Return template and data
-
     # Note: follow this example for how to pass into a map
     # https://stackoverflow.com/questions/42499535/passing-a-json-object-from-flask-to-javascript
     return render_template("leafletmap.html", map_data=map_data)
 
 @app.route("/realestatedashboard")
 def realestatedashboard():
+     # 
+    all_data = []
+    query = """SELECT latitude, longitude, borough_name, sale_price, building_class_category
+                FROM public.real_estate_data"""
+    # Open a connection to SQL
+    connection = engine.connect()
+    # Execute query
+    result = engine.execute(query)
+    # Append each result to our list
+    for row in result:
+        all_data.append(row)
+    # Close the connection
+    connection.close()
 
-    return render_template("realestatedashboard.html")
+    # Convert to a DF, group by boro and species
+    df = pd.DataFrame(all_data, columns = ["latitude", "longitude", "borough_name", "sale_price", "building_class_category"])
+    grouped = df.groupby(["borough_name", "building_class_category"]).agg({"sale_price":"count"})
 
-@app.route("/team")
-def team():
-    return render_template("team.html")
+    # Format data for D3
+    bar_data = {}
+    for borough_name in df.borough_name.unique():
+        subdf = grouped.loc[borough_name]
+        top15 = subdf.sort_values(by='sale_price', ascending=False).iloc[:15]
+        y = list(top15.index)
+        x = list(top15.sale_price)
+        bar_data[borough_name] = {"x": x, "y": y}
+    # Return template and data
+    return render_template("realestatedashboard.html", bar_data= bar_data, boros = list(bar_data.keys()))
 
 @app.route("/treedashboard")
 def treedashboard():
@@ -102,9 +123,6 @@ def treedashboard():
     # Return template and data
     return render_template("treedashboard.html", bar_data= bar_data, boros = list(bar_data.keys()))
 
-@app.route("/treedata")
-def treedata():
-    return render_template("treedata.html")
 
 @app.route("/scrape")
 def scrape():
