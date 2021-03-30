@@ -78,7 +78,7 @@ var icons = {
     shape: "penta"
   }),
   LOW: L.ExtraMarkers.icon({
-    icon: "ion-android-bicycle",
+    icon: "ion-android-tree_id",
     iconColor: "white",
     markerColor: "orange",
     shape: "circle"
