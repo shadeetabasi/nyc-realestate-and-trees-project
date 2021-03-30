@@ -49,12 +49,14 @@ def leafletmap():
     result = engine.execute(query)
     # Append each result to our list
     for row in result:
-        map_data.append(row)
+        map_data.append({
+            "latitude": row[0],
+            "longitude": row[1],
+            "spc_common": row[2],
+            "boroname": row[3]
+        })
     # Close the connection
     connection.close()
-
-    # Take random sample for development purposes
-    map_data = sample(map_data, 100)
 
     # Return template and data
     # Note: follow this example for how to pass into a map
