@@ -1,5 +1,5 @@
 // Creating our initial map object
-// We set the longitude, latitude, and the starting zoom level for sf
+// We set the longitude, latitude, and the starting zoom level
 // This gets inserted into the div with an id of 'map' in index.html
 var myMap = L.map("map", {
     center: [40.7128, -74.0060],
