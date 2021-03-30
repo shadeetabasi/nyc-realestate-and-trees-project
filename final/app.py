@@ -90,7 +90,7 @@ def realestatedashboard():
         x = list(top15.sale_price)
         bar_data[borough] = {"x": x, "y": y}
     # Return template and data
-    return render_template("realestatedashboard.html", bar_data= bar_data, boros = list(bar_data.keys()))
+    return render_template("realestatedashboard.html", bar_data= bar_data, boroughs = list(bar_data.keys()))
 
 @app.route("/treedashboard")
 def treedashboard():
