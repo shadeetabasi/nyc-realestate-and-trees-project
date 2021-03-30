@@ -7,7 +7,7 @@ A final folder:
 * Connect_to_db folder loading the data into an SQL database
 * Templates folder with our html
 * Static folder with our javascript code, and stylization 
-<br>
+
 Shadee_WIP folder with the work in progress code for visualizations
 <br>
 Keiko folder with jupyter notebooks cleaning the data and a folder storing the cleaned data
