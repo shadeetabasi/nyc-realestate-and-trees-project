@@ -91,7 +91,7 @@ var icons = {
   })
 };
 
-// Perform an API call to the Citi Bike Station Information endpoint
+// Perform an API call to the new york tree Information endpoint
 d3.json(" https://tree-map.nycgovparks.org/ ", function(infoRes) {
 
   // When the first API call is complete, perform another call to the Citi Bike Station Status endpoint
