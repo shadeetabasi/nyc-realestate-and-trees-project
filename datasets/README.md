@@ -1,1 +1,0 @@
-# nyc-trees-and-squirrels-project
