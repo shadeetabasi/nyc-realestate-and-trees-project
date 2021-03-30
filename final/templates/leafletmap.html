@@ -177,6 +177,109 @@
 			// Add our marker cluster layer to the map
 			myMap.addLayer(markers);
 
+				// create Bronx custom icon
+				var bronxIcon = L.icon({
+				iconUrl: 'https://pics.freeicons.io/uploads/icons/png/14502897621581665318-512.png',
+				iconSize: [95, 95], // size of the icon
+				popupAnchor: [0,-15]
+				});
+
+				// create popup contents
+				var customPopup = "<strong>Average Square Miles:</strong> 42.47<br><strong>Average Property Sale Price:</strong> $620,003.72<br><strong>Total # of Trees:</strong> 85,203<br><strong>Average # of Trees/Sq Mile:</strong> 2006.19";
+				
+				// specify popup options 
+				var customOptions =
+					{
+					'maxWidth': '500',
+					'className' : 'custom'
+					}
+				
+				// create marker object, pass custom icon as option, pass content and options to popup, add to map
+				L.marker([40.8448, -73.8648], {icon: bronxIcon}).bindPopup(customPopup,customOptions).addTo(myMap);
+
+				myMap.addLayer(markers);
+
+				// create Brooklyn custom icon
+				var brooklynIcon = L.icon({
+				iconUrl: 'https://pics.freeicons.io/uploads/icons/png/14502897621581665318-512.png',
+				iconSize: [95, 95], // size of the icon
+				popupAnchor: [0,-15]
+				});
+
+				// create popup contents
+				var bkcustomPopup = "<strong>Average Square Miles:</strong> 69.5<br><strong>Average Property Sale Price:</strong> $852,779.43<br><strong>Total # of Trees:</strong> 177,293<br><strong>Average # of Trees/Sq Mile:</strong> 2550.98";
+				
+				// specify popup options 
+				var bkcustomOptions =
+					{
+					'maxWidth': '500',
+					'className' : 'custom'
+					}
+				
+				// create marker object, pass custom icon as option, pass content and options to popup, add to map
+				L.marker([40.6782, -73.9442], {icon: brooklynIcon}).bindPopup(bkcustomPopup,bkcustomOptions).addTo(myMap);
+
+				// create Manhattan custom icon
+				var manhattanIcon = L.icon({
+				iconUrl: 'https://pics.freeicons.io/uploads/icons/png/14502897621581665318-512.png',
+				iconSize: [95, 95], // size of the icon
+				popupAnchor: [0,-15]
+				});
+
+				// create popup contents
+				var mncustomPopup = "<strong>Average Square Miles:</strong> 22.82<br><strong>Average Property Sale Price:</strong> $4,000,411.11<br><strong>Total # of Trees:</strong> 65,423<br><strong>Average # of Trees/Sq Mile:</strong> 2866.91";
+				
+				// specify popup options 
+				var mncustomOptions =
+					{
+					'maxWidth': '500',
+					'className' : 'custom'
+					}
+				
+				// create marker object, pass custom icon as option, pass content and options to popup, add to map
+				L.marker([40.7831, -73.9712], {icon: manhattanIcon}).bindPopup(mncustomPopup,mncustomOptions).addTo(myMap);
+				
+				// create Queens custom icon
+				var queensIcon = L.icon({
+				iconUrl: 'https://pics.freeicons.io/uploads/icons/png/14502897621581665318-512.png',
+				iconSize: [95, 95], // size of the icon
+				popupAnchor: [0,-15]
+				});
+
+				// create popup contents
+				var qnscustomPopup = "<strong>Average Square Miles:</strong> 108.1<br><strong>Average Property Sale Price:</strong> $548,761.33<br><strong>Total # of Trees:</strong> 250,551<br><strong>Average # of Trees/Sq Mile:</strong> 2317.77";
+				
+				// specify popup options 
+				var qnscustomOptions =
+					{
+					'maxWidth': '500',
+					'className' : 'custom'
+					}
+				
+				// create marker object, pass custom icon as option, pass content and options to popup, add to map
+				L.marker([40.7282, -73.7949], {icon: queensIcon}).bindPopup(qnscustomPopup,qnscustomOptions).addTo(myMap);
+
+				// create Queens custom icon
+				var statenislandIcon = L.icon({
+				iconUrl: 'https://pics.freeicons.io/uploads/icons/png/14502897621581665318-512.png',
+				iconSize: [95, 95], // size of the icon
+				popupAnchor: [0,-15]
+				});
+
+				// create popup contents
+				var sicustomPopup = "<strong>Average Square Miles:</strong> 58.69<br><strong>Average Property Sale Price:</strong> $398,384.34<br><strong>Total # of Trees:</strong> 105,318<br><strong>Average # of Trees/Sq Mile:</strong> 1794.48";
+				
+				// specify popup options 
+				var sicustomOptions =
+					{
+					'maxWidth': '500',
+					'className' : 'custom'
+					}
+				
+				// create marker object, pass custom icon as option, pass content and options to popup, add to map
+				L.marker([40.5795, -74.1502], {icon: statenislandIcon}).bindPopup(sicustomPopup,sicustomOptions).addTo(myMap);
+
+
 		</script>
 		
 		
