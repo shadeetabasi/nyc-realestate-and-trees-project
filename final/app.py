@@ -83,12 +83,12 @@ def realestatedashboard():
 
     # Format data for D3
     bar_data = {}
-    for borough_name in df.borough_name.unique():
-        subdf = grouped.loc[borough_name]
+    for borough in df.borough_name.unique():
+        subdf = grouped.loc[borough]
         top15 = subdf.sort_values(by='sale_price', ascending=False).iloc[:15]
         y = list(top15.index)
         x = list(top15.sale_price)
-        bar_data[borough_name] = {"x": x, "y": y}
+        bar_data[borough] = {"x": x, "y": y}
     # Return template and data
     return render_template("realestatedashboard.html", bar_data= bar_data, boros = list(bar_data.keys()))
 

@@ -48,6 +48,20 @@
 						<h3>Magna odio tempus commodo</h3>
 						<p>In arcu accumsan arcu adipiscing accumsan orci ac. Felis id enim aliquet. Accumsan ac integer lobortis commodo ornare aliquet accumsan erat tempus amet porttitor. Ante commodo blandit adipiscing integer semper orci eget. Faucibus commodo adipiscing mi eu nullam accumsan morbi arcu ornare odio mi adipiscing nascetur lacus ac interdum morbi accumsan vis mi accumsan ac praesent.</p>
 						<p>Felis sagittis eget tempus primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Magna sed etiam ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus lorem ipsum dolor sit amet nullam.</p>
+					
+						<div id="bar"></div>
+
+						<select id="selDataset" onchange="optionChanged(this.value)">
+							{% for borough in boroughs %}
+							<option value="{{ borough }}">{{ borough }}</option>
+							{% endfor %}
+						</select>
+						</div>
+						<div class="panel panel-primary">
+						<div class="panel-heading">
+						</div>
+						<div id="sample-metadata" class="panel-body">
+					
 					</div>
 				</div>
 			</section>
@@ -77,12 +91,70 @@
             </div>
         </footer>
 
-    <!-- Scripts -->
-	<script src="/static/js/jquery.min.js"></script>
+	<!-- Scripts -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+			<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+			<script src="/static/js/jquery.min.js"></script>
 			<script src="/static/js/browser.min.js"></script>
 			<script src="/static/js/breakpoints.min.js"></script>
 			<script src="/static/js/util.js"></script>
 			<script src="/static/js/main.js"></script>
 
+			<script>
+				// SAVE PATH
+				var raw_data = JSON.parse('{{ bar_data | tojson | safe}}');
+		
+				// Set bar chart data
+				const barChartData = {
+					x: [],
+					y: [],
+					type: "bar",
+					orientation: "h",
+					transforms: [{
+						type: 'sort',
+						order: 'ascending'
+					}]
+				};
+				const layout = {
+					title: {
+						text:'',
+						font: {
+							family: 'Raleway',
+							size: 24
+						},
+						xref: 'paper',
+						x: 0.05,
+						margin: {
+							l: 200,
+							r: 50,
+							b: 1,
+							t: 1,
+							pad: 0
+						}
+					}
+				};
+		
+				Plotly.newPlot("bar", [barChartData], layout).then(
+					updatePlotly()
+				);
+		
+				// This function is called when a dropdown menu item is selected
+				function updatePlotly() {
+					// Use D3 to select the dropdown menu
+					var dropdownMenu = d3.select("#selDataset");
+					// Assign the value of the dropdown menu option to a variable
+					var borough = dropdownMenu.property("value");
+		
+					Plotly.restyle("bar", "y", [raw_data[borough]["y"]]);
+					Plotly.restyle("bar", "x", [raw_data[borough]["x"]]);
+					Plotly.relayout("bar", {"title": "Most common building types in " + borough +", NY"})
+		
+				}
+		
+				
+				d3.selectAll("#selDataset").on("change", updatePlotly);
+		
+		
+			</script>
 </body>
 </html>
